@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8wp3527lqmah"]
+
+[ext_resource type="Script" path="res://Scripts/canvas.gd" id="1_1d7fl"]
+[ext_resource type="PackedScene" uid="uid://wy75x8vwgq6r" path="res://Scenes/face.tscn" id="2_47shq"]
+
+[node name="Face" type="Node2D"]
+script = ExtResource("1_1d7fl")
+
+[node name="Face" parent="." instance=ExtResource("2_47shq")]
+position = Vector2(960, 540)
+scale = Vector2(0.26, 0.26)

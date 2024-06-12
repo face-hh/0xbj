@@ -1,0 +1,247 @@
+[gd_scene load_steps=17 format=3 uid="uid://fm4st71yqpkm"]
+
+[ext_resource type="Script" path="res://Scenes/blackjack.gd" id="1_ej625"]
+[ext_resource type="PackedScene" uid="uid://da14itbhx2a3d" path="res://Scenes/card.tscn" id="2_08dt4"]
+[ext_resource type="Texture2D" uid="uid://o6tp8k6bjm60" path="res://Assets/Misc/hit_normal.png" id="3_y83l4"]
+[ext_resource type="Texture2D" uid="uid://chhx2k1gajhkd" path="res://Assets/Misc/hit_pressed.png" id="4_sbny7"]
+[ext_resource type="Texture2D" uid="uid://cmm3y6p2iiph2" path="res://Assets/Misc/hit_disabled.png" id="5_03fgc"]
+[ext_resource type="Texture2D" uid="uid://7v64xc7ylem3" path="res://Assets/Misc/stay_normal.png" id="5_fcgbh"]
+[ext_resource type="Texture2D" uid="uid://ctg2s4gbul3id" path="res://Assets/Misc/stay_pressed.png" id="5_rscxi"]
+[ext_resource type="FontFile" uid="uid://gk0f34x7xc1o" path="res://Fonts/Uni Sans Heavy.otf" id="7_xxkne"]
+[ext_resource type="Texture2D" uid="uid://d3trissjjytmx" path="res://Assets/Misc/stay_disabled.png" id="8_daial"]
+
+[sub_resource type="Animation" id="Animation_fb8ds"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Labels:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_kwxcl"]
+resource_name = "floating"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Buttons:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(7, 270), Vector2(7, 259.36), Vector2(7, 270)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Labels:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rjc26"]
+_data = {
+"RESET": SubResource("Animation_fb8ds"),
+"floating": SubResource("Animation_kwxcl")
+}
+
+[sub_resource type="Animation" id="Animation_jgwsx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Labels/PlayerScore:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.095, 0.095)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Labels/DealerScore:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.095, 0.095)]
+}
+
+[sub_resource type="Animation" id="Animation_5q05g"]
+resource_name = "increase_dealer"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Labels/DealerScore:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.095, 0.095), Vector2(0.125, 0.125), Vector2(0.095, 0.095)]
+}
+
+[sub_resource type="Animation" id="Animation_cs8k6"]
+resource_name = "increase_player"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Labels/PlayerScore:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.095, 0.095), Vector2(0.125, 0.125), Vector2(0.095, 0.095)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_065b2"]
+_data = {
+"RESET": SubResource("Animation_jgwsx"),
+"increase_dealer": SubResource("Animation_5q05g"),
+"increase_player": SubResource("Animation_cs8k6")
+}
+
+[node name="Blackjack" type="Node2D"]
+script = ExtResource("1_ej625")
+
+[node name="Dealer" type="Node2D" parent="."]
+scale = Vector2(0.245, 0.245)
+
+[node name="Card" parent="Dealer" instance=ExtResource("2_08dt4")]
+position = Vector2(151.02, 179.592)
+
+[node name="Card2" parent="Dealer" instance=ExtResource("2_08dt4")]
+position = Vector2(400, 179.592)
+
+[node name="Card3" parent="Dealer" instance=ExtResource("2_08dt4")]
+position = Vector2(655.02, 179.592)
+
+[node name="Card4" parent="Dealer" instance=ExtResource("2_08dt4")]
+position = Vector2(910.204, 179.592)
+
+[node name="Card5" parent="Dealer" instance=ExtResource("2_08dt4")]
+position = Vector2(1167.35, 179.592)
+
+[node name="Card6" parent="Dealer" instance=ExtResource("2_08dt4")]
+position = Vector2(1424.49, 175.51)
+
+[node name="Player" type="Node2D" parent="."]
+position = Vector2(0, 161.525)
+scale = Vector2(0.245, 0.245)
+
+[node name="Card" parent="Player" instance=ExtResource("2_08dt4")]
+position = Vector2(151.02, 179.592)
+
+[node name="Card2" parent="Player" instance=ExtResource("2_08dt4")]
+position = Vector2(400, 179.592)
+
+[node name="Card3" parent="Player" instance=ExtResource("2_08dt4")]
+position = Vector2(655.02, 179.592)
+
+[node name="Card4" parent="Player" instance=ExtResource("2_08dt4")]
+position = Vector2(910.204, 179.592)
+
+[node name="Card5" parent="Player" instance=ExtResource("2_08dt4")]
+position = Vector2(1167.35, 179.592)
+
+[node name="Card6" parent="Player" instance=ExtResource("2_08dt4")]
+position = Vector2(1424.49, 175.51)
+
+[node name="Buttons" type="Node2D" parent="."]
+position = Vector2(7, 259.36)
+scale = Vector2(0.06, 0.06)
+
+[node name="HitButton" type="TextureButton" parent="Buttons"]
+offset_right = 1024.0
+offset_bottom = 768.0
+texture_normal = ExtResource("3_y83l4")
+texture_pressed = ExtResource("4_sbny7")
+texture_disabled = ExtResource("5_03fgc")
+
+[node name="StayButton" type="TextureButton" parent="Buttons"]
+offset_left = 1248.6
+offset_right = 2272.6
+offset_bottom = 768.0
+texture_normal = ExtResource("5_fcgbh")
+texture_pressed = ExtResource("5_rscxi")
+texture_disabled = ExtResource("8_daial")
+
+[node name="Labels" type="Node2D" parent="."]
+
+[node name="PlayerScore" type="Label" parent="Labels"]
+offset_left = -18.0
+offset_top = 226.0
+offset_right = 610.0
+offset_bottom = 473.0
+rotation = -1.5708
+scale = Vector2(0.095, 0.095)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 45
+theme_override_fonts/font = ExtResource("7_xxkne")
+theme_override_font_sizes/font_size = 246
+text = "12"
+
+[node name="DealerScore" type="Label" parent="Labels"]
+offset_left = -17.0
+offset_top = 67.0
+offset_right = 611.0
+offset_bottom = 314.0
+rotation = -1.5708
+scale = Vector2(0.095, 0.095)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 45
+theme_override_fonts/font = ExtResource("7_xxkne")
+theme_override_font_sizes/font_size = 246
+text = "23"
+
+[node name="FloatingPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rjc26")
+}
+speed_scale = 0.27
+
+[node name="LabelPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_065b2")
+}
+
+[node name="ResultLabel" type="Label" parent="."]
+visible = false
+offset_left = 115.0
+offset_top = 101.0
+offset_right = 1159.0
+offset_bottom = 348.0
+scale = Vector2(0.145, 0.145)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 45
+theme_override_fonts/font = ExtResource("7_xxkne")
+theme_override_font_sizes/font_size = 246
+text = "You win."
+
+[connection signal="pressed" from="Buttons/HitButton" to="." method="_on_hit_button_pressed"]
+[connection signal="pressed" from="Buttons/StayButton" to="." method="_on_stay_button_pressed"]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfisirmdgmqkk"]
+
+[ext_resource type="PackedScene" uid="uid://b8wp3527lqmah" path="res://Scenes/canvas.tscn" id="1_cx4q6"]
+[ext_resource type="Script" path="res://Scripts/game.gd" id="1_qj5g0"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_qj5g0")
+
+[node name="Face" parent="." instance=ExtResource("1_cx4q6")]
+position = Vector2(-754, 282)

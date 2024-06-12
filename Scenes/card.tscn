@@ -1,0 +1,91 @@
+[gd_scene load_steps=9 format=3 uid="uid://da14itbhx2a3d"]
+
+[ext_resource type="Script" path="res://Scripts/card.gd" id="1_4dwmq"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r5e28"]
+load_path = "res://.godot/imported/back.png-90b5b81d7fac10ea6574e3cf9899089f.ctex"
+
+[sub_resource type="Animation" id="Animation_xjaqf"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_1ftqs"]
+resource_name = "reveal"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 0.16), Vector2(0.16, 0.16)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"reveal_finished"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rrmbq"]
+_data = {
+"RESET": SubResource("Animation_xjaqf"),
+"reveal": SubResource("Animation_1ftqs")
+}
+
+[sub_resource type="Animation" id="Animation_jmtff"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_koujc"]
+resource_name = "floating"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vpj71"]
+_data = {
+"RESET": SubResource("Animation_jmtff"),
+"floating": SubResource("Animation_koujc")
+}
+
+[node name="Card" type="Node2D"]
+script = ExtResource("1_4dwmq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -10)
+scale = Vector2(0.16, 0.16)
+texture = SubResource("CompressedTexture2D_r5e28")
+
+[node name="RevealPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rrmbq")
+}
+speed_scale = 0.4
+
+[node name="FloatingPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vpj71")
+}
+speed_scale = 0.27

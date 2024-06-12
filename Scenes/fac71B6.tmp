@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://wy75x8vwgq6r"]
+
+[ext_resource type="Script" path="res://Scripts/sprite_to_collision.gd" id="1_yuhq5"]
+[ext_resource type="Texture2D" uid="uid://i13h372ubeli" path="res://OC/explaining3.png" id="2_h1nub"]
+[ext_resource type="Script" path="res://Scripts/face.gd" id="3_4qcm6"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_yuhq5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -9.53674e-07)
+texture = ExtResource("2_h1nub")
+script = ExtResource("3_4qcm6")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="Container" type="Node" parent="."]
+
+[connection signal="input_event" from="Area2D" to="Sprite2D" method="_on_area_2d_input_event"]
