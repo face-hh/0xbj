@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://fm4st71yqpkm"]
 
-[ext_resource type="Script" path="res://Scenes/blackjack.gd" id="1_ej625"]
+[ext_resource type="Script" path="res://Scripts/blackjack.gd" id="1_ej625"]
 [ext_resource type="PackedScene" uid="uid://da14itbhx2a3d" path="res://Scenes/card.tscn" id="2_08dt4"]
 [ext_resource type="Texture2D" uid="uid://o6tp8k6bjm60" path="res://Assets/Misc/hit_normal.png" id="3_y83l4"]
 [ext_resource type="Texture2D" uid="uid://chhx2k1gajhkd" path="res://Assets/Misc/hit_pressed.png" id="4_sbny7"]

@@ -17,6 +17,10 @@ boot_splash/bg_color=Color(0, 0, 0, 0)
 boot_splash/image="res://Assets/Misc/transparent.png"
 config/icon="res://icon.svg"
 
+[autoload]
+
+Utils="*res://Scripts/utils.gd"
+
 [display]
 
 window/size/viewport_width=0

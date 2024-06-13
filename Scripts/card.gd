@@ -90,6 +90,7 @@ const POSSIBLE_CARDS = [
 @onready var sprite_2d = $Sprite2D
 @onready var texture = BACK;
 @onready var reveal_player = $RevealPlayer
+@onready var label = $Sprite2D/Label
 
 signal proceed
 
@@ -98,13 +99,28 @@ var card_value: String
 func _ready():
 	visible = false
 	sprite_2d.texture = texture
+	label.hide()
 
-func show_card(show_value: bool):
+func hide_label():
+	label.hide()
+
+func show_value(show: bool, dealer: bool = false):
+	var _texture
+
+	if not show and not dealer:
+		label.text = str(Utils.score_from(card_value))
+		_texture = BACK
+		label.show()
+	elif not show and dealer:
+		_texture = BACK
+	elif show:
+		_texture = texture
+	
 	reveal_player.play("reveal")
 
 	await proceed
 	visible = true
-	sprite_2d.texture = texture if show_value else BACK
+	sprite_2d.texture = _texture
 
 func reveal_finished() -> void:
 	proceed.emit()
@@ -120,5 +136,6 @@ func assign_value(card: String):
 	if card.begins_with("D"): texture = DIAMONDS[value]
 	if card.begins_with("H"): texture = HEARTS[value]
 	
-	
 	card_value = card
+	
+

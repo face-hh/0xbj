@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://da14itbhx2a3d"]
+[gd_scene load_steps=10 format=3 uid="uid://da14itbhx2a3d"]
 
 [ext_resource type="Script" path="res://Scripts/card.gd" id="1_4dwmq"]
+[ext_resource type="FontFile" uid="uid://gk0f34x7xc1o" path="res://Fonts/Uni Sans Heavy.otf" id="2_co6qi"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r5e28"]
 load_path = "res://.godot/imported/back.png-90b5b81d7fac10ea6574e3cf9899089f.ctex"
@@ -77,6 +78,18 @@ script = ExtResource("1_4dwmq")
 position = Vector2(0, -10)
 scale = Vector2(0.16, 0.16)
 texture = SubResource("CompressedTexture2D_r5e28")
+
+[node name="Label" type="Label" parent="Sprite2D"]
+offset_left = -150.0
+offset_top = -887.5
+offset_right = 103.0
+offset_bottom = -640.5
+scale = Vector2(1.26, 1.26)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 45
+theme_override_fonts/font = ExtResource("2_co6qi")
+theme_override_font_sizes/font_size = 246
+text = "10"
 
 [node name="RevealPlayer" type="AnimationPlayer" parent="."]
 libraries = {
