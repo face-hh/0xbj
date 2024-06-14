@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3lq1h1qfnvx2"]
+
+[ext_resource type="PackedScene" uid="uid://c6oerlmonfgu6" path="res://Scenes/trick_card.tscn" id="1_d043q"]
+[ext_resource type="Script" path="res://Scripts/trick_storage.gd" id="1_dkv7m"]
+
+[node name="TrickStorage" type="Node2D"]
+script = ExtResource("1_dkv7m")
+
+[node name="TrickCard" parent="." instance=ExtResource("1_d043q")]
+position = Vector2(0, -50)
+original_pos = Vector2(0, -50)
+
+[node name="TrickCard2" parent="." instance=ExtResource("1_d043q")]
+
+[node name="TrickCard3" parent="." instance=ExtResource("1_d043q")]
+position = Vector2(0, 50)
+original_pos = Vector2(0, 50)

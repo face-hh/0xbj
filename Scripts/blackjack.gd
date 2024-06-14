@@ -15,6 +15,8 @@ class_name Blackjack
 @onready var stay_button = $Buttons/StayButton
 @onready var result_label = $ResultLabel
 
+@onready var trick_cards = $TrickCards
+
 var gamedata = {
 	"dealer": [],
 	"player": [],
@@ -28,6 +30,8 @@ func _ready():
 	floating_player.play("floating")
 	
 	init_game()
+	for trick in trick_cards.get_children():
+		trick.setup_legacy()
 
 func init_game():
 	at("d", 0, random_card(), false)
@@ -154,9 +158,9 @@ func _on_stay_button_pressed():
 
 func end_game():
 	var d_final_score = get_score("d");
-	dealer_cards[0].show_value(true)
+	dealer_cards[0].show_value(true, false, true)
 	player_cards[0].hide_label()
-	player_cards[0].show_value(true)
+	player_cards[0].show_value(true, false, true)
 
 	label_player.play("increase_dealer")
 	dealer_score.text = str(d_final_score)

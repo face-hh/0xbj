@@ -1,0 +1,280 @@
+[gd_scene load_steps=9 format=3 uid="uid://c6oerlmonfgu6"]
+
+[ext_resource type="Script" path="res://Scripts/trick_card.gd" id="1_5pphd"]
+[ext_resource type="Texture2D" uid="uid://cwog634nv6i2m" path="res://Assets/Misc/description_box.png" id="2_4yeng"]
+[ext_resource type="Texture2D" uid="uid://con18jfo2oi5f" path="res://Assets/Cards/trick_swap.png" id="2_xft8r"]
+[ext_resource type="FontFile" uid="uid://gk0f34x7xc1o" path="res://Fonts/Uni Sans Heavy.otf" id="3_474u8"]
+
+[sub_resource type="Animation" id="Animation_rc6x1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -10)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.16, 0.16)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D2:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(349, -411)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D2:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.155, 0.155)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D2:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprite2D2:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_vuwpv"]
+resource_name = "info"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.378929, 1),
+"update": 0,
+"values": [Vector2(322, 82.42), Vector2(322, -14)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.329877, 1),
+"update": 0,
+"values": [Vector2(0.155, 0.155), Vector2(0.155, 0.155)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.353553, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_idint"]
+resource_name = "use"
+length = 1.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 1.4, 1.6),
+"transitions": PackedFloat32Array(0.189465, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -10), Vector2(0, -400), Vector2(0, -400), Vector2(0, -400), Vector2(0, -532.72)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 1.6),
+"transitions": PackedFloat32Array(1, 0.329877, 1, 1),
+"update": 0,
+"values": [Vector2(0.16, 0.16), Vector2(0.16, 0.16), Vector2(0.2, 0.2), Vector2(0.2, 0.2)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 1.4, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D2:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 1.4, 1.6),
+"transitions": PackedFloat32Array(0.307786, 0.366022, 1, 1),
+"update": 0,
+"values": [Vector2(386.7, -186.595), Vector2(376.48, -411), Vector2(376.48, -411), Vector2(376.48, -551.33)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D2:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 1.6),
+"transitions": PackedFloat32Array(1, 0.258816, 1, 1),
+"update": 0,
+"values": [Vector2(0.125, 0.125), Vector2(0.155, 0.155), Vector2(0.175, 0.175), Vector2(0.175, 0.175)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D2:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.2, 1.6),
+"transitions": PackedFloat32Array(0.517632, 1, 1),
+"update": 0,
+"values": [0.174533, 0.0, 0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprite2D2:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.2, 1.4, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ukp6u"]
+_data = {
+"RESET": SubResource("Animation_rc6x1"),
+"info": SubResource("Animation_vuwpv"),
+"use": SubResource("Animation_idint")
+}
+
+[node name="TrickCard" type="Node2D"]
+script = ExtResource("1_5pphd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -10)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("2_xft8r")
+
+[node name="TextureButton" type="TextureButton" parent="Sprite2D"]
+offset_left = -719.0
+offset_top = -994.0
+offset_right = 725.0
+offset_bottom = 981.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ukp6u")
+}
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(349, -411)
+scale = Vector2(0.155, 0.155)
+texture = ExtResource("2_4yeng")
+
+[node name="Label" type="Label" parent="Sprite2D2"]
+offset_left = -957.0
+offset_top = -714.0
+offset_right = 854.0
+offset_bottom = 760.0
+theme_override_fonts/font = ExtResource("3_474u8")
+theme_override_font_sizes/font_size = 276
+text = "Show the next card"
+autowrap_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[connection signal="mouse_entered" from="Sprite2D/TextureButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Sprite2D/TextureButton" to="." method="_on_mouse_exited"]

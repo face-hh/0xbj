@@ -46,15 +46,6 @@ const SPADE_8 = preload("res://Assets/Cards/spade_8.png")
 const SPADE_9 = preload("res://Assets/Cards/spade_9.png")
 const SPADE_10 = preload("res://Assets/Cards/spade_10.png")
 const SPADE_ACE = preload("res://Assets/Cards/spade_ace.png")
-const TRICK_24 = preload("res://Assets/Cards/trick_24.png")
-const TRICK_27 = preload("res://Assets/Cards/trick_27.png")
-const TRICK_777 = preload("res://Assets/Cards/trick_777.png")
-const TRICK_BEST_CARD = preload("res://Assets/Cards/trick_best_card.png")
-const TRICK_DESTROY_RECENT_CARD = preload("res://Assets/Cards/trick_destroy_recent_card.png")
-const TRICK_NEW_CARD_ON_CARD = preload("res://Assets/Cards/trick_new_card_on_card.png")
-const TRICK_PEAK = preload("res://Assets/Cards/trick_peak.png")
-const TRICK_REMOVE_ALL_TRICK_CARDS = preload("res://Assets/Cards/trick_remove_all_trick_cards.png")
-const TRICK_SWAP = preload("res://Assets/Cards/trick_swap.png")
 
 const SPADES = {
   "2": SPADE_2, "3": SPADE_3, "4": SPADE_4, "5": SPADE_5, "6": SPADE_6, 
@@ -104,7 +95,7 @@ func _ready():
 func hide_label():
 	label.hide()
 
-func show_value(show: bool, dealer: bool = false):
+func show_value(show: bool, dealer: bool = false, new: bool = true):
 	var _texture
 
 	if not show and not dealer:
@@ -116,8 +107,11 @@ func show_value(show: bool, dealer: bool = false):
 	elif show:
 		_texture = texture
 	
-	reveal_player.play("reveal")
-
+	if new:
+		reveal_player.play("reveal")
+	else:
+		reveal_player.play("reveal_full")
+	
 	await proceed
 	visible = true
 	sprite_2d.texture = _texture
