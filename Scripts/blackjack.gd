@@ -16,13 +16,18 @@ class_name Blackjack
 @onready var result_label = $ResultLabel
 
 @onready var trick_cards = $TrickCards
+@onready var trick_storage = $TrickStorage
 
 var gamedata = {
 	"dealer": [],
 	"player": [],
 	"win_at": 21,
-	"staying": false
+	"staying": false,
+	"table": [],
+	"tricks": [],
+	"seven": false,
 }
+var no_longer_hit = false
 
 func _ready():
 	float_all()
@@ -30,14 +35,34 @@ func _ready():
 	floating_player.play("floating")
 	
 	init_game()
-	for trick in trick_cards.get_children():
-		trick.setup_legacy()
+	await get_tree().create_timer(2).timeout
+
+func reset_game():
+	for card in cards:
+		card.get_node("RevealPlayer").play_backwards("reveal")
+	for trick in trick_storage.get_children():
+		trick.queue_free()
+	
+	gamedata = {
+		"dealer": [],
+		"player": [],
+		"win_at": 21,
+		"staying": false,
+		"table": [],
+		"tricks": [],
+		"seven": false,
+		"draw_another": false
+	}
+	init_game()
 
 func init_game():
 	at("d", 0, random_card(), false)
 	at("d", 1, random_card(), true)
 	at("p", 0, random_card(), false)
 	at("p", 1, random_card(), true)
+	
+	trick_storage.give_card(Utils.TRICK_CARDS[7])
+	give_trick()
 
 func reveal_all() -> void:
 	for card in cards:
@@ -69,9 +94,18 @@ func win(what: String):
 	
 	result_label.text = "I win." if what == "d" else "You win."
 	result_label.show()
+	
+	give_trick()
+
+func give_trick():
+	var trick = Utils.TRICK_CARDS.pick_random()
+
+	gamedata.tricks.append(trick)
+	trick_storage.give_card(trick)
 
 func buttons(enabled: bool):
-	hit_button.disabled = !enabled
+	if !no_longer_hit:
+		hit_button.disabled = !enabled
 	stay_button.disabled = !enabled
 
 func get_cards() -> Array[Card]:
@@ -86,7 +120,7 @@ func float_all():
 	for card in cards:
 		card.get_node("FloatingPlayer").play("floating")
 
-func random_card() -> String:
+func random_card(best: bool = false, who: String = "p") -> String:
 	var blacklisted = []
 	
 	for card in gamedata.dealer:
@@ -94,28 +128,56 @@ func random_card() -> String:
 	for card in gamedata.player:
 		blacklisted.append(card)
 	
-	var card = null;
+	if not best:
+		var card = null
+		while card == null or card in blacklisted:
+			card = Card.POSSIBLE_CARDS.pick_random()
+		return card
 	
-	while(card == null or blacklisted.has(card)):
-		card = Card.POSSIBLE_CARDS.pick_random()
+	var best_card = null
+	var closest_score_diff = 999
+	var current_score = get_score(who)
+	var target_score = gamedata.win_at
+
+	for card in Card.POSSIBLE_CARDS:
+		if card not in blacklisted:
+			var temp_score = current_score + Utils.score_from(card)
+			var score_diff = abs(target_score - temp_score)
+			if score_diff < closest_score_diff and temp_score <= target_score:
+				closest_score_diff = score_diff
+				best_card = card
 	
-	return card
+	return best_card
 
 func get_score(who: String, exclude_first_card: bool = false) -> int:
 	var cards = gamedata.player.duplicate() if who == "p" else gamedata.dealer.duplicate()
 	var score = 0
-
+	var sevens = 0
+	
 	if exclude_first_card: cards.remove_at(0)
 
 	for card in cards:
-		score += Utils.score_from(card)
-
+		var temp_score = Utils.score_from(card);
+		
+		if gamedata.seven and temp_score == 7:
+			sevens += 1
+		
+		score += temp_score
+	
+	if sevens == 3:
+		win('p')
 	return score
 
-func _on_hit_button_pressed():
-	at("p", gamedata.player.size(), random_card(), true)
+func _on_hit_button_pressed(best: bool = false):
+	at("p", gamedata.player.size(), random_card(best), true)
 	hit_player.play("hit")
 	gamedata.staying = false
+	
+	var score = get_score("p")
+	
+	if score >= gamedata.win_at:
+		no_longer_hit = true
+		hit_button.disabled = true
 	
 	buttons(false)
 	
@@ -126,22 +188,16 @@ func _on_hit_button_pressed():
 func play_ai():
 	var dealer_score = get_score("d")
 	var player_score = get_score("p")
-	print(str(dealer_score) + " | " + str(player_score))
-	if dealer_score < player_score:
-		# TODO: draw best possible card
-		at("d", gamedata.dealer.size(), random_card(), true)
-		hit_player.play("hit_dealer")
-		buttons(true)
-	elif dealer_score < 17:
-		at("d", gamedata.dealer.size(), random_card(), true)
+
+	# TODO: make this easier for the player
+	if dealer_score != gamedata.win_at:
+		at("d", gamedata.dealer.size(), random_card(true, "d"), true)
 		hit_player.play("hit_dealer")
 		buttons(true)
 	else:
 		stay()
 
 func stay():
-	print("Ill stay...")
-	
 	if gamedata.staying:
 		return end_game()
 	
@@ -167,9 +223,9 @@ func end_game():
 	
 	if d_final_score == get_score("p"):
 		win("draw")
-	if d_final_score > 21:
+	if d_final_score > gamedata.win_at:
 		win("p")
-	elif d_final_score == 21:
+	elif d_final_score == gamedata.win_at:
 		win("d")
 	elif d_final_score > get_score("p"):
 		win("d")

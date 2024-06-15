@@ -5,11 +5,17 @@ var original_size = scale
 
 var card_info: String = "???"
 var type: Utils.Types = Utils.Types.TABLE
+var card_index: int = 1
 
+@onready var sprite_2d = $Sprite2D
 @onready var label = $Sprite2D2/Label
 @onready var animation_player = $AnimationPlayer
 @onready var sprite_2d_2 = $Sprite2D2
 @onready var texture_button: TextureButton = $Sprite2D/TextureButton
+
+func update_info():
+	sprite_2d.texture = Utils.TRICK_CARDS[card_index - 1].resource
+	label.text = card_info
 
 func _ready():
 	sprite_2d_2.modulate.a = 0
@@ -43,3 +49,17 @@ func _on_mouse_exited():
 		sprite_2d_2.modulate.a = 0
 		scale = original_size
 	)
+
+func move_to(gamedata):
+	var index = gamedata.table.size()
+	var data = Utils.TABLE_POS[index]
+	
+	var tween: Tween = get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_QUART)
+
+	tween.parallel().tween_property(self, "scale", original_size, 0.15)
+	tween.parallel().tween_property(self, "rotation", data.rotation, 0.15)
+	tween.parallel().tween_property(self, "position", data.position, 0.15)
+
+	tween.play()

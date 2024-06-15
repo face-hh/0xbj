@@ -107,7 +107,7 @@ script = ExtResource("1_4dwmq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -10)
-scale = Vector2(0.16, 0.16)
+scale = Vector2(1e-05, 0.16)
 texture = SubResource("CompressedTexture2D_r5e28")
 
 [node name="Label" type="Label" parent="Sprite2D"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://fm4st71yqpkm"]
+[gd_scene load_steps=18 format=3 uid="uid://fm4st71yqpkm"]
 
 [ext_resource type="Script" path="res://Scripts/blackjack.gd" id="1_ej625"]
 [ext_resource type="PackedScene" uid="uid://da14itbhx2a3d" path="res://Scenes/card.tscn" id="2_08dt4"]
@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://ctg2s4gbul3id" path="res://Assets/Misc/stay_pressed.png" id="5_rscxi"]
 [ext_resource type="FontFile" uid="uid://gk0f34x7xc1o" path="res://Fonts/Uni Sans Heavy.otf" id="7_xxkne"]
 [ext_resource type="Texture2D" uid="uid://d3trissjjytmx" path="res://Assets/Misc/stay_disabled.png" id="8_daial"]
-[ext_resource type="PackedScene" uid="uid://c6oerlmonfgu6" path="res://Scenes/trick_card.tscn" id="10_6u6bo"]
 [ext_resource type="PackedScene" uid="uid://c3lq1h1qfnvx2" path="res://Scenes/trick_storage.tscn" id="11_ioup1"]
 
 [sub_resource type="Animation" id="Animation_fb8ds"]
@@ -175,7 +174,7 @@ position = Vector2(1167.35, 179.592)
 position = Vector2(1424.49, 175.51)
 
 [node name="Buttons" type="Node2D" parent="."]
-position = Vector2(7, 259.36)
+position = Vector2(7, 270)
 scale = Vector2(0.06, 0.06)
 
 [node name="HitButton" type="TextureButton" parent="Buttons"]
@@ -248,21 +247,6 @@ text = "You win."
 [node name="TrickCards" type="Node2D" parent="."]
 position = Vector2(0, 6.915)
 scale = Vector2(0.2, 0.2)
-
-[node name="TrickCard" parent="TrickCards" instance=ExtResource("10_6u6bo")]
-position = Vector2(172.093, 567.442)
-rotation = -0.148353
-
-[node name="TrickCard2" parent="TrickCards" instance=ExtResource("10_6u6bo")]
-position = Vector2(375, 570.425)
-rotation = 0.270526
-
-[node name="TrickCard3" parent="TrickCards" instance=ExtResource("10_6u6bo")]
-position = Vector2(565, 575.425)
-
-[node name="TrickCard4" parent="TrickCards" instance=ExtResource("10_6u6bo")]
-position = Vector2(770, 585.425)
-rotation = 0.139626
 
 [node name="TrickStorage" parent="." instance=ExtResource("11_ioup1")]
 position = Vector2(425, 275)

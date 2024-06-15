@@ -127,7 +127,7 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.353553, 1),
+"transitions": PackedFloat32Array(1.86606, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
@@ -261,6 +261,7 @@ libraries = {
 }
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 15
 position = Vector2(349, -411)
 scale = Vector2(0.155, 0.155)
 texture = ExtResource("2_4yeng")

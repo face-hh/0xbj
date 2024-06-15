@@ -89,7 +89,6 @@ func random_card() -> String:
 	var card = null;
 	
 	while(card == null or blacklisted.has(card)):
-		print("searching card..")
 		card = Card.POSSIBLE_CARDS.pick_random()
 	
 	return card
@@ -100,12 +99,7 @@ func get_score(who: String) -> int:
 	
 	for card in cards:
 		score += score_from(card)
-	
-	if who == "p":
-		if score > 21:
-			win("d")
-		if score == 21:
-			win("p")
+
 	return score
 
 func score_from(card: String) -> int:
@@ -124,6 +118,15 @@ func score_from(card: String) -> int:
 func _on_hit_button_pressed():
 	at("p", gamedata.player.size(), random_card(), true)
 	hit_player.play("hit")
+	
+	var score = get_score("p")
+	
+	if score > gamedata.win_at:
+		no_longer_hit = true
+		hit_button.disabled = true
+	elif score == gamedata.win_at:
+		no_longer_hit = true
+		hit_button.disabled = true
 
 func _on_stay_button_pressed():
 	dealer_cards[1].show_card(true)
