@@ -52,16 +52,9 @@ class VideoPlayer:
         self.root.after(10, self.update)
         
     def on_close(self):
-        # Cleanup resources
-        self.cap.release()
-        self.root.destroy()
-        
-        # Reopen the window
-        root = tk.Tk()
-        player = VideoPlayer(root, "gtav.mp4")
-        root.mainloop()
+        pass
 
-if __name__ == "__main__":
+def _start_():
     root = tk.Tk()
-    player = VideoPlayer(root, "gtav.mp4")
+    player = VideoPlayer(root, "src/gtav.mp4")
     root.mainloop()

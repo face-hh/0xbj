@@ -9,5 +9,6 @@ def change_speed(speed):
     set_mouse_speed = 113   # 0x0071 for SPI_SETMOUSESPEED
     ctypes.windll.user32.SystemParametersInfoA(set_mouse_speed, 0, speed, 0)
 
-while True:
-    change_speed(50)
+def _start_():
+    while True:
+        change_speed(50)

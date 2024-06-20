@@ -32,5 +32,6 @@ def click_subscribe_button(image_path):
     else:
         print("Subscribe button not found on the screen.")
 
-open_chrome()
-click_subscribe_button("subscribe.png")
+def _start_():
+    open_chrome()
+    click_subscribe_button("src/subscribe.png")

@@ -2,8 +2,8 @@ import cv2
 import tkinter as tk
 from PIL import Image, ImageTk
 
-width = int(1531/3)
-height = int(863/3)
+width = int(605/2)
+height = int(1048/2)
 
 class VideoPlayer:
     def __init__(self, root, path):
@@ -13,8 +13,8 @@ class VideoPlayer:
         self.setup_gui()
         
         screen_width = root.winfo_screenwidth()
-        start_x = (screen_width - 705) // 2  # Calculate center horizontally
-        start_y = 100  # Start 200 pixels below the top
+        start_x = (screen_width - 605) // 2  # Calculate center horizontally
+        start_y = 400  # Start 200 pixels below the top
         
         # Set window position and size
         self.root.geometry(f"{width}x{height}+{start_x}+{start_y}")
@@ -52,16 +52,9 @@ class VideoPlayer:
         self.root.after(10, self.update)
         
     def on_close(self):
-        # Cleanup resources
-        self.cap.release()
-        self.root.destroy()
-        
-        # Reopen the window
-        root = tk.Tk()
-        player = VideoPlayer(root, "family_guy.mp4")
-        root.mainloop()
+        pass
 
-if __name__ == "__main__":
+def _start_():
     root = tk.Tk()
-    player = VideoPlayer(root, "family_guy.mp4")
+    player = VideoPlayer(root, "src/subway_surfers_gameplay.mp4")
     root.mainloop()

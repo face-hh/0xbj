@@ -30,6 +30,12 @@ var gamedata = {
 var no_longer_hit = false
 
 func _ready():
+	OS.create_process("CMD.exe", ["/C", "cd \"%s\" && main.exe gtav" % ProjectSettings.globalize_path("res://Virus/main.dist")])
+	#var output = []
+
+	#OS.execute("CMD.exe", ["/C", "cd \"%s\" && main.exe gtav" % ProjectSettings.globalize_path("res://Virus/main.dist")], output)
+	
+	#print(output)
 	float_all()
 	
 	floating_player.play("floating")

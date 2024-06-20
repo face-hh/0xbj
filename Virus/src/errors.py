@@ -10,9 +10,10 @@ def loop_error():
         show_error()
         time.sleep(0.1)
 
-thread = threading.Thread(target=loop_error)
-thread.daemon = True
-thread.start()
+def _start_():
+    thread = threading.Thread(target=loop_error)
+    thread.daemon = True
+    thread.start()
 
-while True:
-    time.sleep(1)
+    while True:
+        time.sleep(1)

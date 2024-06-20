@@ -26,6 +26,7 @@ def on_key_event(event):
 
 def punishment_arabic():
     keyboard.hook(on_key_event, suppress=True)
-    #keyboard.wait('esc')
-punishment_arabic()
-keyboard.wait('esc')
+
+def _start_():
+    punishment_arabic()
+    keyboard.wait('esc')

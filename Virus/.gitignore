@@ -1,7 +1,9 @@
-gtav.mp4
-satisfying.mp4
-family_guy.mp4
-subway_surfers_gameplay.mp4
-fart-with-reverb.mp3
-skibidi.jpg
-subscribe.png
+main.build
+main.dist
+src/*.mp4
+src/*.png
+src/*.jpg
+src/*.mp3
+src/vlc
+*.import
+src/__pycache__
