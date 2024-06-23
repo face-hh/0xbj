@@ -249,7 +249,7 @@ position = Vector2(0, 6.915)
 scale = Vector2(0.2, 0.2)
 
 [node name="TrickStorage" parent="." instance=ExtResource("11_ioup1")]
-position = Vector2(425, 275)
+position = Vector2(442.98, 245.15)
 scale = Vector2(0.26, 0.26)
 
 [connection signal="pressed" from="Buttons/HitButton" to="." method="_on_hit_button_pressed"]

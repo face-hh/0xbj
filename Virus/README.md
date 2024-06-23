@@ -10,4 +10,11 @@ Note that the following files are missing from `src/`:
 - subscribe.png
 
 # How to run
-python -m nuitka --standalone main.py --include-data-dir=src/=src --include-data-files=src/*.py=src/ --enable-plugin=tk-inter
+## Run
+`$ python main.py <action>`
+
+## Build
+`$ python -m nuitka --standalone main.py --include-data-dir=src/=src --include-data-dir=src/vlc=src/vlc/ --enable-plugin=tk-inter`
+`$ cp src/vlc main.dist/src/vlc`
+`$ cd main.dist`
+`$ .\main.exe <action>`

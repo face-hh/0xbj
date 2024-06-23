@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cfisirmdgmqkk"]
+[gd_scene load_steps=10 format=3 uid="uid://cfisirmdgmqkk"]
 
 [ext_resource type="PackedScene" uid="uid://b8wp3527lqmah" path="res://Scenes/canvas.tscn" id="1_cx4q6"]
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_qj5g0"]
 [ext_resource type="PackedScene" uid="uid://fm4st71yqpkm" path="res://Scenes/blackjack.tscn" id="3_fv2uo"]
+[ext_resource type="Texture2D" uid="uid://4bdvrp61xdya" path="res://Assets/Misc/Bubble.png" id="4_ltenw"]
+[ext_resource type="Script" path="res://Scripts/subtitle.gd" id="5_52epl"]
 
 [sub_resource type="Animation" id="Animation_0r1kh"]
 length = 0.001
@@ -100,11 +102,45 @@ script = ExtResource("1_qj5g0")
 [node name="Face" parent="." instance=ExtResource("1_cx4q6")]
 position = Vector2(-725.06, 282)
 
+[node name="Node2D" type="Node2D" parent="Face"]
+position = Vector2(725.06, -282)
+
+[node name="Sprite2D" type="Sprite2D" parent="Face/Node2D"]
+position = Vector2(431, 481)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("4_ltenw")
+
+[node name="Subtitle" type="Label" parent="Face/Node2D"]
+offset_left = 257.0
+offset_top = 347.0
+offset_right = 1000.0
+offset_bottom = 743.0
+scale = Vector2(0.477759, 0.477759)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 35
+theme_override_font_sizes/font_size = 71
+text = "Hello this is a test"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+script = ExtResource("5_52epl")
+
+[node name="Timer" type="Timer" parent="Face/Node2D"]
+wait_time = 0.01
+
 [node name="Blackjack" parent="." instance=ExtResource("3_fv2uo")]
-position = Vector2(575, 245)
+position = Vector2(712.12, 243)
 scale = Vector2(2.325, 2.325)
 
 [node name="HitPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_nit5i")
 }
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+volume_db = 12.833
+
+[node name="UIAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+volume_db = 11.0
+
+[connection signal="timeout" from="Face/Node2D/Timer" to="Face/Node2D/Subtitle" method="_on_timer_timeout"]

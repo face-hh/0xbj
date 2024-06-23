@@ -1,5 +1,8 @@
 extends Node2D
 class_name Blackjack
+@onready var game = $".."
+
+@onready var audio_player: AudioStreamPlayer2D = $"../AudioStreamPlayer2D"
 
 @onready var cards: Array[Card] = get_cards()
 @onready var dealer_cards: Array = $Dealer.get_children()
@@ -17,6 +20,14 @@ class_name Blackjack
 
 @onready var trick_cards = $TrickCards
 @onready var trick_storage = $TrickStorage
+@onready var subtitle = $"../Face/Node2D/Subtitle"
+@onready var face: Face = $"../Face".get_node("Face").get_node("Sprite2D")
+@onready var ui_audio_player: AudioStreamPlayer2D = $"../UIAudioPlayer"
+
+const CANCEL = preload("res://Assets/Audio/Cancel 1.wav")
+const CONFIRM = preload("res://Assets/Audio/Confirm 1.wav")
+const HIT = preload("res://Assets/Audio/Hit damage 1.wav")
+const SELECT = preload("res://Assets/Audio/Select 1.wav")
 
 var gamedata = {
 	"dealer": [],
@@ -28,9 +39,33 @@ var gamedata = {
 	"seven": false,
 }
 var no_longer_hit = false
+var wins: int = 0
+
+func play_intro_voicelines(audio_player, voicelines):
+	game.face_talking()
+
+	for voiceline in voicelines:
+		audio_player.stream = voiceline["resource"]
+		audio_player.play()
+		subtitle.subtitle(voiceline["subtitle"])
+		face.change_to(voiceline["oc"])
+		await audio_player.finished
+	
+	game.gameplay()
+
+func play_voiceline(audio_player, voiceline, talking: bool = true):
+	if talking: game.face_talking()
+	
+	audio_player.stream = voiceline["resource"]
+	audio_player.play()
+	subtitle.subtitle(voiceline["subtitle"])
+	face.change_to(voiceline["oc"])
+	
+	if talking:
+		await audio_player.finished
+		game.gameplay()
 
 func _ready():
-	OS.create_process("CMD.exe", ["/C", "cd \"%s\" && main.exe gtav" % ProjectSettings.globalize_path("res://Virus/main.dist")])
 	#var output = []
 
 	#OS.execute("CMD.exe", ["/C", "cd \"%s\" && main.exe gtav" % ProjectSettings.globalize_path("res://Virus/main.dist")], output)
@@ -41,14 +76,21 @@ func _ready():
 	floating_player.play("floating")
 	
 	init_game()
-	await get_tree().create_timer(2).timeout
+	#play_intro_voicelines(audio_player, Utils.VOICELINES["voiceline"])
+	game.gameplay()
 
 func reset_game():
 	for card in cards:
 		card.get_node("RevealPlayer").play_backwards("reveal")
-	for trick in trick_storage.get_children():
+	for trick in trick_cards.get_children():
 		trick.queue_free()
 	
+	no_longer_hit = false
+	result_label.hide()
+	buttons(true)
+	init_game()
+
+func init_game():
 	gamedata = {
 		"dealer": [],
 		"player": [],
@@ -59,20 +101,13 @@ func reset_game():
 		"seven": false,
 		"draw_another": false
 	}
-	init_game()
 
-func init_game():
 	at("d", 0, random_card(), false)
 	at("d", 1, random_card(), true)
 	at("p", 0, random_card(), false)
 	at("p", 1, random_card(), true)
 	
-	trick_storage.give_card(Utils.TRICK_CARDS[7])
-	give_trick()
-
-func reveal_all() -> void:
-	for card in cards:
-		card.get_node("RevealPlayer").play("reveal")
+	if wins != 0: give_trick()
 
 func at(what: String, index: int, card: String, show: bool, update: bool = true):
 	if what == "d":
@@ -92,16 +127,27 @@ func at(what: String, index: int, card: String, show: bool, update: bool = true)
 		label_player.play("increase_player")
 		player_score.text = str(get_score("p"))
 
-func win(what: String):
-	if what == "draw":
+func win(who: String):
+	if who == "draw":
 		result_label.text = "Draw..."
 		result_label.show()
-		return
+	else:
+		result_label.text = "I win." if who == "d" else "You win."
+		result_label.show()
 	
-	result_label.text = "I win." if what == "d" else "You win."
-	result_label.show()
+	await get_tree().create_timer(1.0).timeout
 	
-	give_trick()
+	# var virus = Utils.VOICELINES["virus"].pick_random()
+	if who == "d":
+		var virus = Utils.VOICELINES["virus"][10]
+		play_voiceline(audio_player, virus, true)
+		
+		#OS.create_process("CMD.exe", ["/C", "cd \"%s\" && main.exe %s" % [ProjectSettings.globalize_path("res://Virus/main.dist"), virus.name]])
+	else:
+		wins += 1
+		play_voiceline(audio_player, Utils.VOICELINES["round"][wins - 1], true)
+	
+	reset_game()
 
 func give_trick():
 	var trick = Utils.TRICK_CARDS.pick_random()
@@ -126,7 +172,7 @@ func float_all():
 	for card in cards:
 		card.get_node("FloatingPlayer").play("floating")
 
-func random_card(best: bool = false, who: String = "p") -> String:
+func random_card(best: bool = false, who: String = "p", base_on_winning: bool = false) -> String:
 	var blacklisted = []
 	
 	for card in gamedata.dealer:
@@ -134,7 +180,10 @@ func random_card(best: bool = false, who: String = "p") -> String:
 	for card in gamedata.player:
 		blacklisted.append(card)
 	
-	if not best:
+	var probability_of_best_card = wins / 10.0
+	var r = randf()
+	#print("r: " + str(r) + " prob: " + str(probability_of_best_card), " is good: " + str(r < probability_of_best_card) + ' with best: ' + str(!best))
+	if !best or r > probability_of_best_card:
 		var card = null
 		while card == null or card in blacklisted:
 			card = Card.POSSIBLE_CARDS.pick_random()
@@ -175,6 +224,9 @@ func get_score(who: String, exclude_first_card: bool = false) -> int:
 	return score
 
 func _on_hit_button_pressed(best: bool = false):
+	ui_audio_player.stream = HIT
+	ui_audio_player.play()
+	
 	at("p", gamedata.player.size(), random_card(best), true)
 	hit_player.play("hit")
 	gamedata.staying = false
@@ -196,11 +248,13 @@ func play_ai():
 	var player_score = get_score("p")
 
 	# TODO: make this easier for the player
-	if dealer_score != gamedata.win_at:
-		at("d", gamedata.dealer.size(), random_card(true, "d"), true)
+	if dealer_score < gamedata.win_at:
+		at("d", gamedata.dealer.size(), random_card(true, "d", true), true)
 		hit_player.play("hit_dealer")
 		buttons(true)
+		play_voiceline(audio_player, Utils.VOICELINES["hit"].pick_random(), false)
 	else:
+		play_voiceline(audio_player, Utils.VOICELINES["stand"].pick_random(), false)
 		stay()
 
 func stay():
@@ -210,6 +264,9 @@ func stay():
 	buttons(true)
 
 func _on_stay_button_pressed():
+	ui_audio_player.stream = HIT
+	ui_audio_player.play()
+	
 	gamedata.staying = true
 
 	buttons(false)

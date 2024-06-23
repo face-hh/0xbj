@@ -16,6 +16,7 @@ import src.subway
 import src.wallpaper
 import src.youtube
 import src.sigma
+import src.uwuvlc
 
 python_file = sys.argv[1]
 

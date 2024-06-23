@@ -6,7 +6,13 @@ var time
 var still_pressing = false
 var ignore_upcoming = false
 @onready var blackjack = $".."
+@onready var ui_audio_player = $/root/Game/UIAudioPlayer
+
 const TRICK_CARD = preload("res://Scenes/trick_card.tscn")
+
+const SELECT = preload("res://Assets/Audio/Select 1.wav")
+const CANCEL = preload("res://Assets/Audio/Cancel 1.wav")
+const CONFIRM = preload("res://Assets/Audio/Confirm 1.wav")
 
 var connections = {}
 
@@ -67,7 +73,8 @@ func _on_pressed(trickcard):
 	if ignore_upcoming:
 		ignore_upcoming = false
 		return
-	
+	ui_audio_player.stream = SELECT
+	ui_audio_player.play()
 	var tween: Tween = get_tree().create_tween()
 
 	tween.set_ease(Tween.EASE_IN_OUT)
@@ -81,6 +88,8 @@ func _on_pressed(trickcard):
 		tween.parallel().tween_property(trickcard, "position:y", trickcard.position.y - h, 0.25)
 		trickcard.get_node("AnimationPlayer").play("info")
 	else:
+		ui_audio_player.stream = CANCEL
+		ui_audio_player.play()
 		past_card = null
 		tween.play()
 		return
@@ -137,6 +146,8 @@ func shake(trickcard: Node2D, duration: float = 0.6, magnitude: float = 30.0):
 	#tween.play()
 
 func play_use(trickcard: Node2D):
+	ui_audio_player.stream = CONFIRM
+	ui_audio_player.play()
 	var i = trickcard.card_index;
 	
 	if Utils.Types.TABLE == trickcard.type:

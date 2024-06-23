@@ -144,7 +144,9 @@ func _on_stay_button_pressed():
 	
 	dealer_score.text = str(dealer_score_final)
 	
-	if dealer_score_final > 21:
+	if dealer_score_final == get_score("p"):
+		win("draw")
+	elif dealer_score_final > 21:
 		win("p")
 	elif dealer_score_final == 21:
 		win("d")
