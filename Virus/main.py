@@ -20,10 +20,14 @@ import src.uwuvlc
 
 python_file = sys.argv[1]
 
-if python_file == "arabic":
+if python_file == "verify":
+    print("success")
+elif python_file == "arabic":
     src.arabic._start_()
 elif python_file == "sigma":
-    src.sigma._start_()
+    src.sigma._start_("src/sigma.mp4")
+elif python_file == "outro":
+    src.sigma._start_("src/outro.mov")
 elif python_file == "bsod":
     src.bsod._start_()
 elif python_file == "click":

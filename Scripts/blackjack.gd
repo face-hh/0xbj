@@ -23,11 +23,14 @@ class_name Blackjack
 @onready var subtitle = $"../Face/Node2D/Subtitle"
 @onready var face: Face = $"../Face".get_node("Face").get_node("Sprite2D")
 @onready var ui_audio_player: AudioStreamPlayer2D = $"../UIAudioPlayer"
+@onready var wins_label = $WinsLabel
 
 const CANCEL = preload("res://Assets/Audio/Cancel 1.wav")
 const CONFIRM = preload("res://Assets/Audio/Confirm 1.wav")
 const HIT = preload("res://Assets/Audio/Hit damage 1.wav")
 const SELECT = preload("res://Assets/Audio/Select 1.wav")
+
+const MUSIC = preload("res://Assets/Audio/music.mp3")
 
 var gamedata = {
 	"dealer": [],
@@ -40,7 +43,12 @@ var gamedata = {
 }
 var no_longer_hit = false
 var wins: int = 0
+@onready var virus_path = get_pathy_path() if !OS.is_debug_build() else ProjectSettings.globalize_path("res://Virus/main.dist")
 
+func get_pathy_path() -> NodePath:
+	var path = OS.get_executable_path().get_base_dir()
+
+	return str(path) + '/Virus/main.dist'
 func play_intro_voicelines(audio_player, voicelines):
 	game.face_talking()
 
@@ -66,18 +74,18 @@ func play_voiceline(audio_player, voiceline, talking: bool = true):
 		game.gameplay()
 
 func _ready():
-	#var output = []
+	var output = []
 
-	#OS.execute("CMD.exe", ["/C", "cd \"%s\" && main.exe gtav" % ProjectSettings.globalize_path("res://Virus/main.dist")], output)
-	
-	#print(output)
+	OS.execute("CMD.exe", ["/C", "cd \"%s\" && main.exe verify" % virus_path], output)
+	print(output, virus_path)
+	wins_label.text = virus_path
 	float_all()
 	
 	floating_player.play("floating")
 	
 	init_game()
-	#play_intro_voicelines(audio_player, Utils.VOICELINES["voiceline"])
-	game.gameplay()
+	play_intro_voicelines(audio_player, Utils.VOICELINES["voiceline"])
+	#game.gameplay()
 
 func reset_game():
 	for card in cards:
@@ -133,20 +141,37 @@ func win(who: String):
 		result_label.show()
 	else:
 		result_label.text = "I win." if who == "d" else "You win."
+		game.vignette(Color.from_string("#00ff00" if who == "p" else "#ff0000", "#00ff00"))
+		
 		result_label.show()
 	
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(2.5).timeout
 	
-	# var virus = Utils.VOICELINES["virus"].pick_random()
+	var virus = Utils.VOICELINES["virus"].pick_random()
 	if who == "d":
-		var virus = Utils.VOICELINES["virus"][10]
+		#var virus = Utils.VOICELINES["virus"][10]
 		play_voiceline(audio_player, virus, true)
 		
-		#OS.create_process("CMD.exe", ["/C", "cd \"%s\" && main.exe %s" % [ProjectSettings.globalize_path("res://Virus/main.dist"), virus.name]])
+		if wins == 9:
+			pass
+			OS.create_process("CMD.exe", ["/C", "cd \"%s\" && main.exe outro" % virus_path])
+			await get_tree().create_timer(5).timeout
+			OS.create_process("CMD.exe", ["/C", "cd \"%s\" && main.exe bsod" % virus_path])
+			return
+		OS.create_process("CMD.exe", ["/C", "cd \"%s\" && main.exe %s" % [virus_path, virus.name]])
 	else:
 		wins += 1
+		wins_label.text = "WINS: %s/10" % str(wins)
 		play_voiceline(audio_player, Utils.VOICELINES["round"][wins - 1], true)
-	
+		
+		if wins == 5:
+			$MusicPlayer.stream = MUSIC
+			$MusicPlayer.play()
+		if wins == 8:
+			OS.create_process("CMD.exe", ["/C", "cd \"%s\" && main.exe sigma" % virus_path])
+		if wins == 10:
+			await get_tree().create_timer(5.3).timeout
+			OS.create_process("CMD.exe", ["/C", "cd \"%s\" && main.exe outro" % virus_path])
 	reset_game()
 
 func give_trick():
@@ -180,10 +205,10 @@ func random_card(best: bool = false, who: String = "p", base_on_winning: bool = 
 	for card in gamedata.player:
 		blacklisted.append(card)
 	
-	var probability_of_best_card = wins / 10.0
+	var probability_of_best_card = wins / 15.0
 	var r = randf()
 	#print("r: " + str(r) + " prob: " + str(probability_of_best_card), " is good: " + str(r < probability_of_best_card) + ' with best: ' + str(!best))
-	if !best or r > probability_of_best_card:
+	if !best or (base_on_winning and r > probability_of_best_card):
 		var card = null
 		while card == null or card in blacklisted:
 			card = Card.POSSIBLE_CARDS.pick_random()
@@ -283,14 +308,24 @@ func end_game():
 
 	label_player.play("increase_dealer")
 	dealer_score.text = str(d_final_score)
-	
-	if d_final_score == get_score("p"):
+
+	var player_score = get_score("p")
+
+	if d_final_score == player_score:
 		win("draw")
-	if d_final_score > gamedata.win_at:
+	elif d_final_score > gamedata.win_at and player_score > gamedata.win_at:
+		if d_final_score > player_score:
+			win("p")
+		elif d_final_score < player_score:
+			win("d")
+		else:
+			win("draw")
+	elif d_final_score > gamedata.win_at:
 		win("p")
 	elif d_final_score == gamedata.win_at:
 		win("d")
-	elif d_final_score > get_score("p"):
+	elif d_final_score > player_score:
 		win("d")
 	else:
 		win("p")
+

@@ -101,6 +101,9 @@ func _on_pressed(trickcard):
 func _on_button_down(trickcard):
 	still_pressing = true
 	
+	print(get_parent().get_node("TrickCards").get_children().size())
+	if trickcard.type == Utils.Types.TABLE and get_parent().get_node("TrickCards").get_children().size() == 4:
+		return
 	await get_tree().create_timer(0.2).timeout
 	
 	if still_pressing:

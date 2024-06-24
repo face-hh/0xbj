@@ -244,6 +244,19 @@ theme_override_fonts/font = ExtResource("7_xxkne")
 theme_override_font_sizes/font_size = 246
 text = "You win."
 
+[node name="WinsLabel" type="Label" parent="."]
+offset_left = 178.0
+offset_top = 276.0
+offset_right = 1386.0
+offset_bottom = 523.0
+rotation = 0.21047
+scale = Vector2(0.0570638, 0.0570638)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 45
+theme_override_fonts/font = ExtResource("7_xxkne")
+theme_override_font_sizes/font_size = 246
+text = "WINS: 0/10"
+
 [node name="TrickCards" type="Node2D" parent="."]
 position = Vector2(0, 6.915)
 scale = Vector2(0.2, 0.2)
@@ -251,6 +264,9 @@ scale = Vector2(0.2, 0.2)
 [node name="TrickStorage" parent="." instance=ExtResource("11_ioup1")]
 position = Vector2(442.98, 245.15)
 scale = Vector2(0.26, 0.26)
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+volume_db = -7.84
 
 [connection signal="pressed" from="Buttons/HitButton" to="." method="_on_hit_button_pressed"]
 [connection signal="pressed" from="Buttons/StayButton" to="." method="_on_stay_button_pressed"]

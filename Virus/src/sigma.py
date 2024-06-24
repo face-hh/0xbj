@@ -65,9 +65,7 @@ def play_video(video_path):
             player.stop()
             break
 
-def _start_():
-    video_path = "src/sigma.mp4"
-
+def _start_(video_path):
     play_video(video_path)
 
 #! /usr/bin/python

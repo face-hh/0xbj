@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cfisirmdgmqkk"]
+[gd_scene load_steps=12 format=3 uid="uid://cfisirmdgmqkk"]
 
 [ext_resource type="PackedScene" uid="uid://b8wp3527lqmah" path="res://Scenes/canvas.tscn" id="1_cx4q6"]
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_qj5g0"]
 [ext_resource type="PackedScene" uid="uid://fm4st71yqpkm" path="res://Scenes/blackjack.tscn" id="3_fv2uo"]
 [ext_resource type="Texture2D" uid="uid://4bdvrp61xdya" path="res://Assets/Misc/Bubble.png" id="4_ltenw"]
 [ext_resource type="Script" path="res://Scripts/subtitle.gd" id="5_52epl"]
+[ext_resource type="Shader" path="res://Shaders/vignette.gdshader" id="6_7lavc"]
 
 [sub_resource type="Animation" id="Animation_0r1kh"]
 length = 0.001
@@ -96,6 +97,12 @@ _data = {
 "hit_dealer": SubResource("Animation_d8u5i")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y0cmj"]
+shader = ExtResource("6_7lavc")
+shader_parameter/vignette_intensity = 0.0
+shader_parameter/vignette_opacity = 0.147
+shader_parameter/vignette_rgb = Color(0, 1, 0, 1)
+
 [node name="Game" type="Node"]
 script = ExtResource("1_qj5g0")
 
@@ -142,5 +149,11 @@ volume_db = 12.833
 
 [node name="UIAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 volume_db = 11.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_y0cmj")
+offset_right = 1964.0
+offset_bottom = 1124.0
+mouse_filter = 2
 
 [connection signal="timeout" from="Face/Node2D/Timer" to="Face/Node2D/Subtitle" method="_on_timer_timeout"]

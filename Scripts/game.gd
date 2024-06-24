@@ -1,5 +1,7 @@
 extends Node
 
+@onready var color_rect: ColorRect = $ColorRect
+
 func face_talking():
 	var tween = create_tween()
 	
@@ -27,3 +29,15 @@ func gameplay():
 	tween.set_trans(Tween.TRANS_BOUNCE)
 	
 	tween.play()
+
+func vignette(color: Color):
+	color_rect.material.set("shader_parameter/vignette_rgb", color)
+	
+	color_rect.material.set("shader_parameter/vignette_intensity", 2.895)
+	await get_tree().create_timer(0.5).timeout
+	color_rect.material.set("shader_parameter/vignette_intensity", 0)
+	await get_tree().create_timer(0.5).timeout
+	color_rect.material.set("shader_parameter/vignette_intensity", 2.895)
+	await get_tree().create_timer(0.5).timeout
+	color_rect.material.set("shader_parameter/vignette_intensity", 0)
+	await get_tree().create_timer(0.5).timeout

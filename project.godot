@@ -10,12 +10,12 @@ config_version=5
 
 [application]
 
-config/name="0xBJ"
+config/name="GTA6"
 run/main_scene="res://Scenes/game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 0)
 boot_splash/image="res://Assets/Misc/transparent.png"
-config/icon="res://icon.svg"
+config/icon="res://Assets/OC/gtav.png"
 
 [autoload]
 
@@ -28,6 +28,7 @@ window/size/viewport_height=0
 window/size/borderless=true
 window/size/always_on_top=true
 window/size/transparent=true
+window/stretch/aspect="expand"
 window/per_pixel_transparency/allowed=true
 
 [input]
