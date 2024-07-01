@@ -11,7 +11,7 @@ def _start_():
         print(f"Error: {source_file} does not exist on the desktop.")
         exit()
 
-    for i in range(1, 1000):
+    for i in range(1, 1043):
         dest_file = f'YOURE HACKED LMAO{i}.png'
         dest_path = os.path.join(desktop_path, dest_file)
 

