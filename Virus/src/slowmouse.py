@@ -11,4 +11,4 @@ def change_speed(speed):
 
 def _start_():
     while True:
-        change_speed(50)
+        change_speed(5)
