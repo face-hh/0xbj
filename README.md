@@ -30,7 +30,7 @@ Note:
 7. `slowmouse.py` - will decrease your cursor's speed.
 8. `files.py` - will create ~1000 images on the C:\User\User\Desktop folder.
 9. `gtav.py` - will open a window with Grand Theft Auto 5 parkour clips.
-10. `satisfying` - will open a window with the usual 'satisfying clips' used in TikToks.
+10. `satisfying.py` - will open a window with the usual 'satisfying clips' used in TikToks.
 11. `sigma.py` - will block the mouse and keyboard and play a video of cringe sigma edits.
 12. `subway.py` - will open a window with Subway Surfers gameplay.
 13. `wallpaper.py` - will change the wallpaper to `skibidi.jpg`.
