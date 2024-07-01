@@ -1,10 +1,25 @@
-# Godot Click Through Transparent Window
-This is a demo project for the Godot Engine that features a transparent window with click-through capability and a Godot icon that moves randomly when clicked.
+# 0xbj
+0xbj is a project that makes its user play 10 games of Blackjack. If they lose, the **virus** will **punish** them.
+![image](https://github.com/face-hh/0xbj/assets/69168154/bb3a65df-c0fb-492b-ae25-c5443e1f22bb)
 
-*This branch is compatible with Godot 4.0.2 version. For the version that supports Godot 3.5.2 LTS, please check the `godot-3` branch.*
-## Screenshots
-![GIF](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmQ2YjVlNDQxMjg0YjkwNGE0M2NmNjVmM2Y1MGY4MTVjODc1OTg5OCZjdD1n/COJgkxdrHxaAaeFX0W/giphy.gif)
-## Usage
-This project doesn't add anything directly to the projects it's added to, and there's **no direct use** of this project. You can examine the script files within the project to **see how the implementations work** and apply them to your own projects.
-## Licensing
-This project is licensed under the MIT License. For further information, please refer to the `LICENSE` file.
+# This is a virus. Do not run it on your main machine. Use a virtual machine.
+
+## How to run
+### Pre-built
+1. Download the `.zip` file from the [Releases](https://github.com/face-hh/0xbj/releases) tab.
+2. Unzip it, you will find `Virus` and `GTA6.exe`.
+3. Run `GTA6.exe`
+### Compile
+1. Download the [Godot engine](https://godotengine.org/).
+2. Run the instructions in the `Virus/` folder to compile to a `main.exe`. **NOTE: Most scripts require assets, that are not present on the repo because they're too big. (`.mp4`, `.jpg`, etc.)**
+3. Open the Godot engine, click `Import` and select this folder.
+
+Note:
+- It may take some time for the game to verify if the virus is present.
+- The resolution of the screen must be 1920x1080.
+- You can easily close the program by pressing `Win` and right-click `Close` on GTA6. Or simply restart your computer.
+- **Play with sound!**
+
+## File structure
+- `Virus/` contains all the Python scripts for the virus.
+- The rest of the folders are dedicated to the Godot game.
